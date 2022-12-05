@@ -1,0 +1,463 @@
+/*
+Control GPIOs of the ESP32-Wroon-32 board using the UART port though serial communication. 
+PINs that can be set as ADC includes: 2,4, 12~15, 25~27, 32~36, 39
+PINs that can be set as DAC includes: 25 and 26
+PINS that can be set as DI includes: 1~5, 12~19, 21~23, 25~26, 32~36, 39
+PINS that can be set as D0 includes: 1~5, 12~19, 21~23, 25~26, 32~33
+*/
+//-------------------------------------------
+/*
+All the messages should be send in a way of "CMD0 CMD1 CMD2(optional)",
+CMD0    can be INIT, ASET, DSET, AGET, DGET
+CMD1    the pin number
+CMD2    the value to be set
+
+Examples:
+0. DEBUG
+Used to debug or test the connection. If COM0=DEBUG, then the input CMD1
+will be returnd.
+Example:
+input: 
+  DEBUG TESTCMD
+return: 
+  TESTCMD
+
+1. INIT
+Only needed for Digital Input or Output, a pins should be initialized
+before using as digital input or output:
+Input:
+  INIT <pin_index> IN  // configure <pin_index> as DI
+  INIT <pin_index> OUT  // configure <pin_index> as DO
+return: 
+  OK
+
+2. ASET
+Set analog value.
+input: 
+  ASET <pin_index> <value>  // <value> is between 0-255 for  the 8bit DAC
+  ASET 25 123 //  set the output of GPIO_25 as 123 , which is about 1.65V
+return: 
+  OK
+
+3. DSET
+Set digital value for a pin.
+input:  
+  DSET <pin_index> <value>
+  DSET 1 1  //set the output of GPIO_1 as HIGH, the output pin valtage is 3.3 V.
+  DSET 2 0  //set the output of GPIO_2 as LOW, the output pin valtage is 0 V.
+return: 
+  OK
+
+4. AGET
+Set analog value.
+input:
+  AGET <pin_index>  // return a value between 0-4095 for  the 12-bit DAC
+  AGET 27  //get the analog input reading of GPIO_27, a reading of 4095 for 3.3 V.
+return: 
+  <a Integer_value>
+
+5. DGET
+Get digital value for a pin, return a value of 0 or 1, for the 3.3 V pins.
+The threshold voltage is 2V, i.e. return 0 when <2V,  and 1 when >2V.
+For 5V device, the threshold voltage is 3V. 
+input:
+  DGET <pin_index>
+  DGET 1  //  get the digital input of GPIO_1, return a value of 0 for <2V, or 1 for >2V
+return: 
+  <0 or 1>
+
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+
+#define BAUDRATE 115200
+#define ACCEPT_STRING_MAX 3
+#define CMD_LENGTH 10
+
+// define the pin range for different functionality
+int PIN_DI[]={1,2,3,4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,32,33,34,35,36,39}; //24 pins
+int PIN_DO[]={1,2,3,4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,32,33}; //  20 pins
+int PIN_AO[]={25,26}; //2 pins available for analog output
+int PIN_AI[]={2,4,12,13,14,15,25,26,27,32,33,34,35,36,39}; // 15 pins avalable for analog inputs
+
+char CMD0[CMD_LENGTH]={'0'};// global variables of the received commands 
+char CMD1[CMD_LENGTH]={'0'};
+char CMD2[CMD_LENGTH]={'0'};
+
+
+void setup()
+{
+  Serial.begin(BAUDRATE, SERIAL_8N1, 3, 1);
+  int  icount = 0;
+  while (!Serial) {
+    Serial.printf("waiting for connection for %d seconds",icount);
+    delay(1000); // wait for serial port to connect. Needed for native USB
+    icount = icount + 1;
+  }
+
+}
+
+
+/*check if pin_num is in PIN_DI*/
+int check_PIN_DI(int pin_num)
+{
+  int array_size = sizeof(PIN_DI);
+
+  int flag=0;
+  for(int i = 0;i<array_size;i++)
+  {
+    if(PIN_DI[i]==pin_num)
+    {
+      flag=1;
+      break;
+    }
+  }
+  return flag;
+}
+
+/*check if pin_num is in PIN_DO*/
+int check_PIN_DO(int pin_num){
+  int array_size = sizeof(PIN_DO);
+
+  int flag=0;
+  for(int i = 0;i<array_size;i++)
+  {
+    if(PIN_DO[i]==pin_num)
+    {
+      flag=1;
+      break;
+    }
+  }
+  return flag;
+}
+
+/*check if pin_num is in PIN_AI*/
+int check_PIN_AI(int pin_num){
+  int array_size = sizeof(PIN_AI);
+
+  int flag=0;
+  for(int i = 0;i<array_size;i++)
+  {
+    if(PIN_AI[i]==pin_num)
+    {
+      flag=1;
+      break;
+    }
+  }
+  return flag;
+}
+
+/*check if pin_num is in PIN_AO*/
+int check_PIN_AO(int pin_num){
+  int array_size = sizeof(PIN_AO);
+
+  int flag=0;
+  for(int i = 0;i<array_size;i++)
+  {
+    if(PIN_AO[i]==pin_num)
+    {
+      flag=1;
+      break;
+    }
+  }
+  return flag;
+}
+
+// define main functions to be called
+
+/*
+set_DAC(int pin_index, int value)
+pin_index    The index of GPIO, either 25 or 26 for DAC
+value        The value to be set for output, in the range of [0,255]
+*/
+void ASET()
+{
+  int pin_index = atoi(CMD1);
+  int value = atoi(CMD2);
+
+  //printf("---------------------------------------\n");
+  //printf("WRITE analog value of GPIO_%d to %d.\n",pin_index, value);
+
+  if (check_PIN_AO(pin_index))
+  {
+    dacWrite(pin_index,value);
+    //printf("Done.\n");
+  }
+  else{
+    printf("Error: Wrong pin index for AO.");
+  }
+}
+
+// read analog value of the pin_index
+int AGET()
+{
+  int pin_index = atoi(CMD1);
+  int value;
+  //printf("---------------------------------------\n");
+  //printf("READ analog value of GPIO_%d\n",pin_index);
+  if (check_PIN_AI(pin_index))
+  {
+    value = analogRead(pin_index);
+    //printf("The analog value of GPIO_%d is %d.\n",pin_index, value);
+  }
+  else{
+    //printf("Error: Wrong pin index for AI.");
+    value=0;
+  }
+  //printf("The returned analog value of GPIO_%d is %d.\n",pin_index, value);
+  return value;
+}
+
+// digital output, value can be either 0 or 1
+void DSET()
+{
+  int pin_index = atoi(CMD1);
+  //printf("CMD2=%s\n",CMD2);
+  int value2 = atoi(CMD2);
+  //printf("value2=%d\n",value2);
+
+  int value;
+  if(value2==0){value=LOW;}
+  if(value2==1){value=HIGH;}
+  //printf("SET VALUE=%d.\n", value);
+
+
+  //printf("---------------------------------------\n");
+  //printf("To WRITE digital value of GPIO_%d to %d.\n",pin_index, value);
+
+  if (check_PIN_DO(pin_index))
+  {
+    digitalWrite(pin_index,value);
+    //printf("Done.\n");
+  }
+  else{
+    printf("Error: Wrong pin index for DO.");
+  }
+}
+
+// read digital value of the pin_index
+int DGET()
+{
+  int pin_index = atoi(CMD1);
+  int value;
+  //printf("---------------------------------------\n");
+  //printf("READ digital value of GPIO_%d\n",pin_index);
+
+  if (check_PIN_DI(pin_index))
+  {
+    value = digitalRead(pin_index);
+    //printf("The digital value of GPIO_%d is %d.\n",pin_index, value);
+  }
+  else{
+    //printf("Error: Wrong pin index for DI.");
+    value = 0;
+  }
+  //printf("The returned digital value of GPIO_%d is %d.\n",pin_index, value);
+  return value;
+}
+
+// configure the pin_index as INPUT or OUTPUT
+void INIT()
+{
+  int pin_index = atoi(CMD1);
+
+  if(strcmp(CMD2,"IN")==0)
+  {
+    if(check_PIN_DI(pin_index))
+    {
+      pinMode(pin_index,INPUT);
+      //printf("---------------------------------------\n");
+      //printf("Initiate GPIO_%d as Digital Input.\n",pin_index);
+    }
+  }
+  if(strcmp(CMD2,"OUT")==0)
+  {
+    if(check_PIN_DO(pin_index))
+    {
+      pinMode(pin_index,OUTPUT);
+      //printf("---------------------------------------\n");
+      //printf("Initiate GPIO_%d as Digital Output.\n",pin_index);
+    }
+  }  
+}
+
+//--------------------------------------------
+// read commands from the default serial port, i.e. the default UART port.
+void readCommand()
+{
+  int str_in_max=Serial.available();
+  //printf("str_in_max:%d \n",str_in_max);
+ 
+  memset(CMD0,'\0',CMD_LENGTH);
+  memset(CMD1,'\0',CMD_LENGTH);
+  memset(CMD2,'\0',CMD_LENGTH);
+ 
+  char str_in[str_in_max]={'0'};
+
+  int flag_cmd0_read=1;
+  int flag_cmd1_read=1;
+  int flag_cmd2_read=1;
+  
+  int icount0 = 0;
+  int icount1 = 0;
+  int icount2 = 0;
+  for(int itemp=0;itemp<str_in_max;itemp++)
+  {
+    str_in[itemp]=Serial.read();
+
+    // start receiving CMD0
+    if(!isspace(str_in[itemp])&&flag_cmd0_read)
+    {
+      CMD0[icount0]=str_in[itemp];
+      icount0 = icount0 + 1;
+    }
+    else
+    {//CMD0 is done, set the flag to 
+      flag_cmd0_read=0;
+      //icount0 = 0;
+    }
+    CMD0[icount0] = '\0';
+
+    // start receiving CMD1
+    if(flag_cmd0_read==0&&!isspace(str_in[itemp])&&flag_cmd1_read)
+    {// start from the first letter after spaces
+      if(!isspace(str_in[itemp])&&flag_cmd1_read)
+      {
+        CMD1[icount1]=str_in[itemp];
+        icount1 = icount1 + 1;
+      }
+      else
+      {//CMD1 is done, set the flag to 0
+        flag_cmd1_read=0;
+        icount1 = 0;
+      }
+    }
+    else
+    { // already read some information and come to the next space
+      if(icount1)
+      {
+        flag_cmd1_read=0;
+      }
+    }
+    CMD1[icount0] = '\0';
+
+    // start receiving CMD2
+    if(flag_cmd1_read==0&&!isspace(str_in[itemp])&&flag_cmd2_read)
+    {// start from the first letter after spaces
+      if(!isspace(str_in[itemp])&&flag_cmd2_read)
+      {
+        CMD2[icount2]=str_in[itemp];
+        icount2 = icount2 + 1;
+      }
+      else
+      {//CMD0 is done, set the flag to 
+      flag_cmd2_read=0;
+      icount2 = 0;
+      }
+    }
+    else
+    { 
+      if(icount2) // already read some information and come to the next space
+      {
+        flag_cmd2_read=0;
+      }
+    }
+    CMD2[icount0] = '\0';
+
+  } 
+  str_in[str_in_max-1] = {'\0'};
+  //printf("Read:%s\n",str_in);
+  //printf("CMD0:%s\n",CMD0);
+  //printf("CMD1:%s\n",CMD1);
+  //printf("CMD2:%s\n",CMD2);
+
+  //delay(1000);
+}
+
+//------------------------------------------
+// main loop
+//int analogValue=0;
+void loop()
+{
+  
+/*
+  memset(CMD1,'\0',CMD_LENGTH);
+
+  int PIN_TEST = 12;
+  CMD1[0]='1';
+  CMD1[1]='2';
+  AGET();
+  //int value = analogRead(PIN_TEST);
+  //printf("GPIO_%d analogRead is %d.\n", PIN_TEST, value);
+  delay(500);
+*/
+  //analogValue = analogRead(36);
+
+  // print it out in many formats:
+/*  
+  if(Serial.available()>1)
+  {
+    Serial.write(Serial.read());
+  }
+  delay(10);
+*/
+  if(Serial.available()>1)
+  {
+
+    //Serial.println("println:Hello!\n");
+    //Serial.print("print:Hello!\n");
+    //Serial.write("write:Hello!\n");
+    //printf("--------------------------------\n");
+    readCommand();
+    
+    //printf("CMD0:%s\n",CMD0);
+    //printf("CMD1:%s\n",CMD1);
+    //printf("CMD2:%s\n",CMD2);
+       
+    if(strcmp(CMD0,"INIT")==0)
+    {
+      INIT();
+      Serial.println("OK");
+    }
+
+    if(strcmp(CMD0,"ASET")==0)
+    {
+      ASET();
+      //printf("ASET Done...\n");
+      Serial.println("OK");
+    }
+
+    if(strcmp(CMD0,"DSET")==0)
+    {
+      DSET();
+      Serial.println("OK");
+    }
+    
+    if(strcmp(CMD0,"AGET")==0)
+    {
+      int value = AGET();
+      //printf("AGET done...\n");
+      //printf("%d\n",value);
+      Serial.println(value,DEC);
+    }
+
+    if(strcmp(CMD0,"DGET")==0)
+    {
+      int value = DGET();
+      //printf("%d\n",value);
+      Serial.println(value,DEC);
+    }
+
+   // debug_test, test if the connection is OK
+   if(strcmp(CMD0,"DEBUG")==0)
+    { 
+      Serial.println(CMD1);
+    }
+
+    delay(100);
+  }
+}

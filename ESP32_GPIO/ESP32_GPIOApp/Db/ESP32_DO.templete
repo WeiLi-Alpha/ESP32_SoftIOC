@@ -1,0 +1,9 @@
+record(bo, "$(pref):$(pin):SET")
+{
+        field(DESC, "$(pin) Set DO status")
+        field(DTYP, "stream")
+        field(OUT,  "@$(protocol) setDO($(pin_int)) $(port)")
+        field(ZNAM, "OFF")
+        field(ONAM, "ON")
+	field(PINI, "Yes")
+}

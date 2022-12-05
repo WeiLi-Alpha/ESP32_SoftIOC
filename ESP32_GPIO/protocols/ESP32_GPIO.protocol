@@ -1,0 +1,38 @@
+Terminator = CR LF;
+
+getDI
+{
+	out "DGET \$1";
+	in "%{0|1}";
+}
+setDO
+{
+	out "DSET \$1 %i";
+	in "OK";
+	@init
+	{out "DSET \$1 0";
+	in "OK";}
+}
+
+getAI
+{
+	out "AGET \$1";
+	in "%i";
+}
+
+setAO
+{
+	out "ASET \$1 %i";
+	in "OK";
+	@init
+	{out "ASET \$1 0";
+	in "OK";}
+}
+
+initDIO
+{
+	out "INIT \$1 \$2";
+	in "OK";
+}
+
+

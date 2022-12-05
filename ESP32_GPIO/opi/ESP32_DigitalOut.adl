@@ -1,0 +1,605 @@
+
+file {
+	name="/home/epics/baseAppl_devel/ESP32_GPIO/opi/ESP32_DigitalOut.adl"
+	version=030114
+}
+display {
+	object {
+		x=671
+		y=485
+		width=400
+		height=400
+	}
+	clr=14
+	bclr=4
+	cmap=""
+	gridSpacing=5
+	gridOn=0
+	snapToGrid=0
+}
+"color map" {
+	ncolors=65
+	colors {
+		ffffff,
+		ececec,
+		dadada,
+		c8c8c8,
+		bbbbbb,
+		aeaeae,
+		9e9e9e,
+		919191,
+		858585,
+		787878,
+		696969,
+		5a5a5a,
+		464646,
+		2d2d2d,
+		000000,
+		00d800,
+		1ebb00,
+		339900,
+		2d7f00,
+		216c00,
+		fd0000,
+		de1309,
+		be190b,
+		a01207,
+		820400,
+		5893ff,
+		597ee1,
+		4b6ec7,
+		3a5eab,
+		27548d,
+		fbf34a,
+		f9da3c,
+		eeb62b,
+		e19015,
+		cd6100,
+		ffb0ff,
+		d67fe2,
+		ae4ebc,
+		8b1a96,
+		610a75,
+		a4aaff,
+		8793e2,
+		6a73c1,
+		4d52a4,
+		343386,
+		c7bb6d,
+		b79d5c,
+		a47e3c,
+		7d5627,
+		58340f,
+		99ffff,
+		73dfff,
+		4ea5f9,
+		2a63e4,
+		0a00b8,
+		ebf1b5,
+		d4db9d,
+		bbc187,
+		a6a462,
+		8b8239,
+		73ff6b,
+		52da3b,
+		3cb420,
+		289315,
+		1a7309,
+	}
+}
+text {
+	object {
+		x=10
+		y=10
+		width=130
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Digital out"
+}
+text {
+	object {
+		x=10
+		y=40
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO1"
+}
+"choice button" {
+	object {
+		x=65
+		y=40
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO1:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=65
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO2"
+}
+"choice button" {
+	object {
+		x=65
+		y=65
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO2:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=90
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO3"
+}
+"choice button" {
+	object {
+		x=65
+		y=90
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO3:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=115
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO4"
+}
+"choice button" {
+	object {
+		x=65
+		y=115
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO4:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=140
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO5"
+}
+"choice button" {
+	object {
+		x=65
+		y=140
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO5:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=165
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO6"
+}
+"choice button" {
+	object {
+		x=65
+		y=165
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO6:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=190
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO7"
+}
+"choice button" {
+	object {
+		x=65
+		y=190
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO7:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=215
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO8"
+}
+"choice button" {
+	object {
+		x=65
+		y=215
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO8:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=240
+		width=45
+		height=20
+	}
+	"basic attribute" {
+		clr=0
+	}
+	textix="DO9"
+}
+"choice button" {
+	object {
+		x=65
+		y=240
+		width=100
+		height=20
+	}
+	control {
+		chan="$(p):DO9:SET"
+		clr=14
+		bclr=4
+	}
+	stacking="column"
+}
+oval {
+	object {
+		x=170
+		y=40
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO1:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=65
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO2:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=90
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO3:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=115
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO4:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=140
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO5:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=165
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO6:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=190
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO7:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=215
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO8:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=240
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(p):DO9:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=240
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO9:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=215
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO8:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=190
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO7:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=165
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO6:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=140
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO5:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=115
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO4:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=90
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO3:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=65
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO2:SET"
+	}
+}
+oval {
+	object {
+		x=170
+		y=40
+		width=20
+		height=20
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(p):DO1:SET"
+	}
+}

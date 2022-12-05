@@ -1,0 +1,23 @@
+ESP32_GPIO_registerRecordDeviceDriver.o: \
+ ESP32_GPIO_registerRecordDeviceDriver.cpp \
+ /home/epics/baseAppl_release/base-3.15.6/include/compilerDependencies.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/compiler/gcc/compilerSpecific.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/epicsStdlib.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/shareLib.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/os/Linux/osdStrtod.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/epicsTypes.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/compilerDependencies.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/errMdef.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/iocsh.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/iocshRegisterCommon.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/registryCommon.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/dbStaticLib.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/dbFldTypes.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/dbBase.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/ellLib.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/dbDefs.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/link.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/cantProceed.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/devSup.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/registryRecordType.h \
+ /home/epics/baseAppl_release/base-3.15.6/include/recSup.h

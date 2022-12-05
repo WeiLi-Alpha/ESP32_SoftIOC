@@ -1,0 +1,21 @@
+record(ai, "$(pref):$(pin):READ:RAW")
+{
+        field(DESC, "$(pin) status")
+        field(INP,  "@$(protocol) getAI($(pin_int)) $(port)")
+        field(DTYP, "stream")
+        field(PINI, "YES")
+        field(SCAN, ".1 second")
+        field(FLNK, "$(pref):$(pin):READ")
+}
+record(calcout, "$(pref):$(pin):READ")
+{
+        field(DESC, "$(pin) status")
+##        field(OUT,  "$(pref):STATUS PP")
+        field(CALC, "A*B/C")
+        field(INPA, "$(pref):$(pin):READ:RAW PP NMS")
+        field(INPB, "3.3")
+        field(INPC, "4095")
+	field(EGU, "V")
+        field(SCAN, "Passive")
+	field(PREC, "3")
+}

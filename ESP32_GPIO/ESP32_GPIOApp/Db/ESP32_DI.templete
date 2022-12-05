@@ -1,0 +1,9 @@
+record(bi, "$(pref):$(pin):READ")
+{
+        field(DESC, "$(pin) Set DI status")
+        field(DTYP, "stream")
+        field(INP,  "@$(protocol) getDI($(pin_int)) $(port)")
+        field(SCAN, "1 second")
+        field(ZNAM, "OFF")
+        field(ONAM, "ON")
+}

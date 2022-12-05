@@ -1,0 +1,31 @@
+record(ai, "$(pref):$(pin):SET")
+{
+        field(DESC, "$(pin) status")
+        field(FLNK,"$(pref):$(pin):SET:CALC")
+        field(EGU, "V")
+        field(PREC, "2")
+	field(LOPR,"0")
+	field(HOPR,"3.3")
+	field(HIHI,"3.3")
+	field(HHSV,"MAJOR")
+	field(PINI, "Yes")
+}
+
+record(calcout, "$(pref):$(pin):SET:CALC")
+{
+        field(DESC, "$(pin) status")
+        field(OUT,  "$(pref):$(pin):SET:AO PP")
+        field(CALC, "FLOOR(A*C/B)")
+        field(INPA, "$(pref):$(pin):SET NPP NMS")
+        field(INPB, "3.3")
+        field(INPC, "255")
+        field(SCAN, "Passive")
+}
+
+record(ao, "$(pref):$(pin):SET:AO")
+{
+        field(DESC, "$(pin) status")
+        field(DTYP, "stream")
+        field(OUT,  "@$(protocol) setAO($(pin_int)) $(port)")
+}
+

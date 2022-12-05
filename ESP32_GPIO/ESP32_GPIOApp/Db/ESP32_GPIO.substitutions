@@ -1,0 +1,48 @@
+# ESP32_GPIO.substitutions
+# Template database for the GPIO control of the ESP32 board, 
+# Wei Li 01/12/2022
+#
+# substitutions:
+# pref	   - prefix of the device, could be EPS32:DEVIVE1
+# pin      - the pin name
+# pin_int  - an integer number, the GPIO number
+# port     - device port
+# protocol - protocol, arcus_ACE-SDE.proto for this controller and driver
+file db/ESP32_DO.templete {
+   pattern { pref, pin, pin_int, port, protocol}
+{ "ESP32", "DO1", "15",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO2", "2",   "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO3", "4",   "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO4", "16",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO5", "17",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO6", "5",   "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO7", "18",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO8", "19",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DO9", "21",  "ESP32_1", "ESP32_GPIO.protocol"}
+ }
+
+file db/ESP32_DI.templete {
+   pattern { pref, pin, pin_int, port, protocol}
+{ "ESP32", "DI1", "22",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "DI2", "23",  "ESP32_1", "ESP32_GPIO.protocol"}
+}
+
+file db/ESP32_AI.templete {
+   pattern { pref, pin, pin_int, port, protocol}
+{ "ESP32", "AI1", "13",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI2", "12",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI3", "14",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI4", "27",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI5", "33",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI6", "32",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI7", "35",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI8", "34",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI9", "39",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AI10", "36",  "ESP32_1", "ESP32_GPIO.protocol"}
+}
+
+file db/ESP32_AO.templete {
+   pattern { pref, pin, pin_int, port, protocol}
+{ "ESP32", "AO1", "26",  "ESP32_1", "ESP32_GPIO.protocol"}
+{ "ESP32", "AO2", "25",  "ESP32_1", "ESP32_GPIO.protocol"}
+}

@@ -1,0 +1,7 @@
+epicsEnvSet("IOC","iocESP32_GPIO")
+epicsEnvSet("TOP","/home/epics/baseAppl_devel/ESP32_GPIO")
+epicsEnvSet("MODULES","/home/epics/baseAppl_release/modules")
+epicsEnvSet("CALC","/home/epics/baseAppl_release/modules/calc")
+epicsEnvSet("ASYN","/home/epics/baseAppl_release/modules/asyn")
+epicsEnvSet("STREAM","/home/epics/baseAppl_release/modules/StreamDevice")
+epicsEnvSet("EPICS_BASE","/home/epics/baseAppl_release/base-3.15.6")
