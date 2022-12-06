@@ -17,6 +17,9 @@ of `8-bit` (0-255) in the range of [0, 3.3V].
 It should also be noted that the output voltage from the DAC is not really linear to the setting value, 
 below 3.3 V, the output voltage is typical `0.2 V` lower than the setting value.
 
+GPIO1 and GPIO3 are intentionly left unused, because it's likely conflict with the serial communication UART port. 
+These two pins might be used as RT&RX pins.
+
 ## Materials used
 - Hardware
   - [ESP-WROON-32 board](https://www.amazon.com/dp/B09XDMVS9N)
