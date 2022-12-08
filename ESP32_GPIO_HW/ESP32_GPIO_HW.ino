@@ -362,7 +362,7 @@ void readCommand()
       else
       {//CMD1 is done, set the flag to 0
         flag_cmd1_read=0;
-        icount1 = 0;
+        //icount1 = 0;
       }
     }
     else
@@ -372,7 +372,7 @@ void readCommand()
         flag_cmd1_read=0;
       }
     }
-    CMD1[icount0] = '\0';
+    CMD1[icount1] = '\0';
 
     // start receiving CMD2
     if(flag_cmd1_read==0&&!isspace(str_in[itemp])&&flag_cmd2_read)
@@ -385,7 +385,7 @@ void readCommand()
       else
       {//CMD0 is done, set the flag to 
       flag_cmd2_read=0;
-      icount2 = 0;
+      //icount2 = 0;
       }
     }
     else
@@ -395,7 +395,7 @@ void readCommand()
         flag_cmd2_read=0;
       }
     }
-    CMD2[icount0] = '\0';
+    CMD2[icount2] = '\0';
 
   } 
   str_in[str_in_max-1] = {'\0'};
